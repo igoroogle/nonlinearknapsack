@@ -3,9 +3,9 @@
 
 #include <vector>
 
-using TypeData = long long;
+using TypeData = long double;
 
-const TypeData INF = 2E9;
+const TypeData INF = 2E18;
 
 using Vector = std::vector<TypeData>;
 using Matrix = std::vector<std::vector<TypeData>>;

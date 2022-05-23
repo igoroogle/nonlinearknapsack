@@ -1,4 +1,5 @@
 #include "SolveBase.h"
+#include <iostream>
 
 SolveBase::SolveBase(const InputData& inputData) {
     this->inputData = inputData;

@@ -19,8 +19,10 @@
 #include "SolveStraightForward.h"
 #include "SolveKnapsack01.h"
 #include "SolveMMDP.h"
-#include "SolveMMDPHybrid.h"
-#include "SolveMMDPHybridMainHeuristic.h"
+#include "SolveMMDPHybridHeuristicSum.h"
+#include "SolveMMDPHybridHeuristicMin.h"
+#include "SolveMMDPHybridHeuristicBoth.h"
+#include "SolveMMDPHybridHeuristicRandom.h"
 
 int main() {
     //freopen("ALL-MKP-Instances/sac94/weing/weing1.dat", "r", stdin);
@@ -28,123 +30,165 @@ int main() {
     //freopen("ALL-MKP-Instances/sac94/weish/weish13.dat", "r", stdin);
     //freopen("ALL-MKP-Instances/gk/gk01.dat", "r", stdin);
     //freopen("ALL-MKP-Instances/sac94/sento/sento1.dat", "r", stdin);
-    //freopen("ALL-MKP-Instances/chubeas/OR5x100/OR5x100-0.25_1.dat", "r", stdin);
-    freopen("ALL-MKP-Instances/sac94/pet/pet5.dat", "r", stdin);
+    //freopen("ALL-MKP-Instances/chubeas/OR5x100/OR5x100.dat", "r", stdin);
+    //freopen("test04.in", "r", stdin);
+    int t = 1;
+    //int t;
+    //std::cin >> t;
+    while (t--) {
+        std::cout << "Starting t " << t << '\n';
+        //freopen("ALL-MKP-Instances/sac94/pet/pet5.dat", "r", stdin); //28 10 1
+        //freopen("ALL-MKP-Instances/sac94/pet/pet5.dat", "r", stdin);
+        //freopen("ALL-MKP-Instances/sac94/pet/pet4.dat", "r", stdin); //better min
+        //freopen("ALL-MKP-Instances/sac94/pet/pet5.dat", "r", stdin); //better min
+        //freopen("ALL-MKP-Instances/sac94/pet/pet2.dat", "r", stdin); //better min
+        //freopen("ALL-MKP-Instances/sac94/pet/pet3.dat", "r", stdin);
+        //freopen("tes.txt", "r", stdin);
+        //freopen("test04.txt", "r", stdin);
 
 
-    //initialize Data
-    /*InitializeData initializeData;
-    initializeData.readData();*/
-    InitializeKnapsack01Data initializeKnapsack01Data;
-    initializeKnapsack01Data.readData();
-    ConvertKnapsak01Data  convertKnapsak01Data(initializeKnapsack01Data.getData());
-    convertKnapsak01Data.convert();
+        //initialize Data
+        //InitializeData initializeData;
+        //initializeData.readData();
+        InitializeKnapsack01Data initializeKnapsack01Data;
+        initializeKnapsack01Data.readData();
+        ConvertKnapsak01Data  convertKnapsak01Data(initializeKnapsack01Data.getData());
+        convertKnapsak01Data.convert();
 
 
-    //convertKnapsak01Data.getInputData()
-    InputData inputData = convertKnapsak01Data.getInputData();
-    InitializeData initializeData(inputData);
-    initializeData.writeData();
+        //convertKnapsak01Data.getInputData()
+        InputData inputData = convertKnapsak01Data.getInputData();
+        InitializeData initializeData(inputData);
+        initializeData.writeData();
 
 
-    //Get Result
-    /*OutputData outputData;
-    outputData.maxSum = 323;
-    outputData.x = {1, 2, 3, 4};
-    DisplayData displayData(outputData);
-    displayData.writeData();
+        //Get Result
+        /*OutputData outputData;
+        outputData.maxSum = 323;
+        outputData.x = {1, 2, 3, 4};
+        DisplayData displayData(outputData);
+        displayData.writeData();
 
-    initializeData.writeData();*/
+        initializeData.writeData();*/
 
 
-    //solveStraightForward
-    /*SolveStraightForward solveStraightForward(initializeData.getInputData());
-    {
-        Timer timer;
-        solveStraightForward.solve();
+        //solveStraightForward
+        /*SolveStraightForward solveStraightForward(initializeData.getInputData());
+        {
+            Timer timer;
+            solveStraightForward.solve();
+        }
+
+
+        std::cout << "-----------\n";
+
+        DisplayData displayData(solveStraightForward.getOutputData());
+        displayData.writeData();*/
+
+
+
+
+        //solveKnapsack01
+        /*SolveKnapsack01 solveKnapsack01(initializeData.getInputData());
+        {
+            Timer timer;
+            solveKnapsack01.solve();
+        }
+        std::cout << "-----------2\n";
+        DisplayData displayData2(solveKnapsack01.getOutputData());
+        displayData2.writeData();*/
+
+
+        //solveMMDP
+        /*SolveMMDP solveMMDP(initializeData.getInputData());
+        {
+            Timer timer;
+            solveMMDP.solve();
+        }
+        std::cout << "-----------3 MMDP\n";
+        DisplayData displayData3(solveMMDP.getOutputData());
+        displayData3.writeData();*/
+
+
+        //solveMmdpHybridHeuristicSum
+
+        SolveMMDPHybridHeuristicSum solveMmdpHybridHeuristicSum(initializeData.getInputData());
+
+        {
+            Timer timer;
+            solveMmdpHybridHeuristicSum.solve();
+            //assert(initializeKnapsack01Data.getAns() == solveMmdpHybridHeuristicSum.getOutputData().maxSum);
+        }
+        std::cout << "-----------4 Sum\n";
+        DisplayData displayData4(solveMmdpHybridHeuristicSum.getOutputData());
+        displayData4.writeData();
+
+        //SolveMMDPHybridHeuristicMin
+        /*SolveMMDPHybridHeuristicMin solveMMDPHybridHeuristicMin(initializeData.getInputData());
+
+        {
+            Timer timer;
+            solveMMDPHybridHeuristicMin.solve();
+            //assert(initializeKnapsack01Data.getAns() == solveMMDPHybridHeuristicMin.getOutputData().maxSum);
+        }
+        std::cout << "-----------5 Min\n";
+        DisplayData displayData5(solveMMDPHybridHeuristicMin.getOutputData());
+        displayData5.writeData();*/
+
+
+        //SolveMMDPHybridHeuristicBoth
+        /*SolveMMDPHybridHeuristicBoth solveMMDPHybridHeuristicBoth(initializeData.getInputData());
+
+        {
+            Timer timer;
+            solveMMDPHybridHeuristicBoth.solve();
+            //assert(initializeKnapsack01Data.getAns() == solveMMDPHybridHeuristicBoth.getOutputData().maxSum);
+        }
+        std::cout << "-----------6 Both\n";
+        DisplayData displayData6(solveMMDPHybridHeuristicBoth.getOutputData());
+        displayData6.writeData();*/
+
+
+        SolveMMDPHybridHeuristicRandom solveMMDPHybridHeuristicRandom(initializeData.getInputData());
+
+        {
+            Timer timer;
+            solveMMDPHybridHeuristicRandom.solve();
+            /*std::cout << solveMMDPHybridHeuristicMin.getOutputData().maxSum << "maxSum\n";
+            std::cout << initializeKnapsack01Data.getAns() << "getAns\n";*/
+            //assert(initializeKnapsack01Data.getAns() == solveMMDPHybridHeuristicRandom.getOutputData().maxSum);
+        }
+        std::cout << "-----------7 Random\n";
+        DisplayData displayData7(solveMMDPHybridHeuristicRandom.getOutputData());
+        displayData7.writeData();
+
+        //solveMMDP
+        /*
+        SolveMMDP solveMMDP(initializeKnapsack01Data.getData());
+
+        {
+            Timer timer;
+            solveMMDP.solve();
+        }
+        std::cout << "-----------3\n";
+        DisplayData displayData3(solveMMDP.getOutputData());
+        displayData3.writeData();
+         */
+
+
+
+
+        /*SolveMMDP solveMMDP(convertKnapsak01Data.getInputData());
+        {
+            Timer timer;
+            solveMMDP.solve();
+        }
+
+        std::cout << "-----------3\n";
+        DisplayData displayData3(solveMMDP.getOutputData());
+        displayData3.writeData();*/
+        std::cout << "Finishing t " << t << '\n';
     }
-
-
-    std::cout << "-----------\n";
-
-    DisplayData displayData(solveStraightForward.getOutputData());
-    displayData.writeData();
-
-    //solveKnapsack01
-    SolveKnapsack01 solveKnapsack01(initializeData.getInputData());
-    {
-        Timer timer;
-        solveKnapsack01.solve();
-    }
-    std::cout << "-----------2\n";
-    DisplayData displayData2(solveKnapsack01.getOutputData());
-    displayData2.writeData();*/
-
-
-    //solveMMDP
-    /*SolveMMDP solveMMDP(initializeData.getInputData());
-    {
-        Timer timer;
-        solveMMDP.solve();
-    }
-    std::cout << "-----------3\n";
-    DisplayData displayData3(solveMMDP.getOutputData());
-    displayData3.writeData();*/
-
-    //solveMMDPHybrid
-
-    SolveMMDPHybrid solveMMDPHybrid(initializeData.getInputData());
-
-    {
-        Timer timer;
-        solveMMDPHybrid.solve();
-        assert(initializeKnapsack01Data.getAns() == solveMMDPHybrid.getOutputData().maxSum);
-    }
-    std::cout << "-----------4\n";
-    DisplayData displayData4(solveMMDPHybrid.getOutputData());
-    displayData4.writeData();
-
-    //SolveMMDPHybridMainHeuristic
-
-    //solveMMDPHybrid
-
-    SolveMMDPHybridMainHeuristic solveMMDPHybridMainHeuristic(initializeData.getInputData());
-
-    {
-        Timer timer;
-        solveMMDPHybridMainHeuristic.solve();
-        assert(initializeKnapsack01Data.getAns() == solveMMDPHybridMainHeuristic.getOutputData().maxSum);
-    }
-    std::cout << "-----------5\n";
-    DisplayData displayData5(solveMMDPHybridMainHeuristic.getOutputData());
-    displayData5.writeData();
-
-    //solveMMDP
-    /*
-    SolveMMDP solveMMDP(initializeKnapsack01Data.getData());
-
-    {
-        Timer timer;
-        solveMMDP.solve();
-    }
-    std::cout << "-----------3\n";
-    DisplayData displayData3(solveMMDP.getOutputData());
-    displayData3.writeData();
-     */
-
-
-
-
-    /*SolveMMDP solveMMDP(convertKnapsak01Data.getInputData());
-    {
-        Timer timer;
-        solveMMDP.solve();
-    }
-
-    std::cout << "-----------3\n";
-    DisplayData displayData3(solveMMDP.getOutputData());
-    displayData3.writeData();*/
-
 }
 
 

@@ -22,7 +22,9 @@ protected:
     std::vector<Spaces> spaces;
     std::list<int> indices;
     int indicesSize;
+    int maxIndicesSize;
     void genS(); //generate inS
+    void initialize();
     bool isFeasible(int n, int k);
     bool isDominant(int n, int subdominant, int dominant);
     bool isFeasibility(int n, int k, int p);
@@ -31,6 +33,8 @@ protected:
     void del(int n, int k, int p);
     void add(int n, int k, int p);
     bool isDominantedBy(int n, int k, int p, int t);
+    void restoreOutputData();
+    void restoreX(int p, Vector& x);
     void printB(int p);
 };
 

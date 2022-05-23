@@ -23,16 +23,7 @@ void SolveKnapsack01::solve() {
 
     branchAndBound(v, a, b, includes, excludes, others, bestAns, lowerBound);
     assert(isCorrect(bestAns, a, b));
-    //print(bestAns, v);
     changeOutputData(bestAns, v);
-
-    /*std::cout << "check solving\n";
-    InitializeData initializeData(inputData);
-    initializeData.writeData();
-
-    std::cout << "check output\n";
-    DisplayData displayData(outputData);
-    displayData.writeData();*/
 }
 
 void SolveKnapsack01::initialize(Vector& v, Matrix& a, Vector& b) {

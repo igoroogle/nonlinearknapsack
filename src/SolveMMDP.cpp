@@ -10,15 +10,8 @@ SolveMMDP::SolveMMDP(const InputData& inputData) : SolveBase(inputData) {
 void SolveMMDP::solve() {
     genS();
 
-    //inicialize F_0
-    spaces.resize(1);
-    spaces[0].trace = {-1, 0, -1};
-    indices.push_back(0);
-    spaces[0].it = indices.begin();
-    spaces[0].inList = true;
-    spaces[0].flist.resize(inputData.m + 1);
-    spaces[0].permute.resize(inputData.m + 1);
-    indicesSize = 1;
+    //initialize F_0
+    initialize();
 
     for (int n = 0; n < inputData.n; ++n) {
 
@@ -50,33 +43,9 @@ void SolveMMDP::solve() {
         }
     }
 
-    int p = *indices.begin();
-    int m = inputData.m;
-    for (auto& cur : indices) {
 
-        if (spaces[cur].flist[m] > spaces[p].flist[m]) {
-            p = cur;
-        }
-    }
-
-    /*for (auto& cur : indices) {
-        std::cout << "ind " << cur << ' ' << spaces[cur].trace[0] << ' ' << spaces[cur].trace[1] << ' ';
-        std::cout << spaces[cur].trace[2] << ' ' << spaces[cur].flist[m] << std::endl;
-        printB(cur);
-    }*/
-
-    outputData.maxSum = 0;
-    outputData.x.resize(inputData.n);
-    while (spaces[p].trace[0] != -1) {
-        int n = spaces[p].trace[0];
-        int k = spaces[p].trace[1];
-        outputData.maxSum += inputData.r[n][k];
-        outputData.x[n] = k;
-        p = spaces[p].trace[2];
-    }
-
-    assert(isCorrectData(inputData, outputData));
-    std::cout << "F_N size: " << indicesSize << '\n';
+    //Restoring output Data
+    restoreOutputData();
 }
 
 void SolveMMDP::genS() {
@@ -105,6 +74,18 @@ void SolveMMDP::genS() {
             }
         }
     }
+}
+
+void SolveMMDP::initialize() {
+    spaces.resize(1);
+    spaces[0].trace = {-1, 0, -1};
+    indices.push_back(0);
+    spaces[0].it = indices.begin();
+    spaces[0].inList = true;
+    spaces[0].flist.resize(inputData.m + 1);
+    spaces[0].permute.resize(inputData.m + 1);
+    indicesSize = 1;
+    maxIndicesSize = 1;
 }
 
 
@@ -234,6 +215,7 @@ void SolveMMDP::add(int n, int k, int p) {
     spaces.back().flist.resize(inputData.m + 1);
     spaces.back().permute.resize(inputData.m + 1);
     ++indicesSize;
+    maxIndicesSize = std::max(indicesSize, maxIndicesSize);
 
     for (int i = 0; i <= inputData.m; ++i) {
         TypeData upperBound = 0;
@@ -273,6 +255,41 @@ bool SolveMMDP::isDominantedBy(int n, int k, int p, int t) {
     }
 
     return true;
+}
+
+void SolveMMDP::restoreOutputData() {
+    int p = *indices.begin();
+    int m = inputData.m;
+    for (auto& cur : indices) {
+
+        if (spaces[cur].flist[m] > spaces[p].flist[m]) {
+            p = cur;
+        }
+    }
+
+    outputData.maxSum = 0;
+    outputData.x.resize(inputData.n);
+    while (spaces[p].trace[0] != -1) {
+        int n = spaces[p].trace[0];
+        int k = spaces[p].trace[1];
+        outputData.maxSum += inputData.r[n][k];
+        outputData.x[n] = k;
+        p = spaces[p].trace[2];
+    }
+
+    assert(isCorrectData(inputData, outputData));
+    std::cout << "F_N size: " << indicesSize << '\n';
+    std::cout << "max F_N size: " << maxIndicesSize << '\n';
+}
+
+void SolveMMDP::restoreX(int p, Vector& x) {
+    x.resize(inputData.n);
+    while (spaces[p].trace[0] != -1) {
+        int n = spaces[p].trace[0];
+        int k = spaces[p].trace[1];
+        x[n] = k;
+        p = spaces[p].trace[2];
+    }
 }
 
 void SolveMMDP::printB(int p) {

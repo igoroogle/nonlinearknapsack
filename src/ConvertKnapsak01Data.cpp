@@ -12,14 +12,6 @@ void ConvertKnapsak01Data::convert() {
     inputData.k = 1;
 
     inputData.b = data.capacities;
-    //inputData.b.resize(m);
-    /*for (int i = 0; i < m; ++i) {
-        inputData.g[i].resize(n);
-        for (int j = 0; j < n; ++j) {
-            inputData.g[i][j].resize(2);
-            //inputData.g[i][j][2] = data.a[j][i];
-        }
-    }*/
 
     inputData.r.resize(n);
 

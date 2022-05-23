@@ -11,14 +11,6 @@ void SolveStraightForward::solve() {
     bestData = curData;
     rec(0, curData, bestData);
     outputData = bestData;
-
-    /*std::cout << "check solving\n";
-    InitializeData initializeData(inputData);
-    initializeData.writeData();
-
-    std::cout << "check output\n";
-    DisplayData displayData(outputData);
-    displayData.writeData();*/
 }
 
 void SolveStraightForward::rec(int curInd, OutputData& curData, OutputData& bestData) {
